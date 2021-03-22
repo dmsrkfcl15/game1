@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        window.onload = function(){
+
+            function moveApple(){
+                b.clearRect(appleY*47, appleY*47,55,55);
+                let appleLocation;
+                do{
+                    appleLocation = true;
+                    appleX = Math.floor(Math.random() * 14) + 1;
+                    appleY = Math.floor(Math.random() * 14) + 1;
+                    for (i = 0; i < userX.length; i++){
+                        if(appleX===userX[i] && appleY===userY[i]){
+                            appleLocation = false;
+                        }
+                    }
+                }while (appleLocation === false);
+                b.drawImage(img, appleX*47, appleY*47);
+            }
+
+            function move(){
+                switch(direction){
+                    case 1:
+                        userX.push(userX[(userX.length-1)]);
+                        userY.push(userY[(userY.length-1)]-1);
+                        break;
+
+                    case 2:
+                        userX.push(userX[(userX.length-1)]+1);
+                        userY.push(userY[(userY.length-1)]);
+                        break;
+
+                    case 3:
+                        userX.push(userX[(userX.length-1)]);
+                        userY.push(userY[(userY.length-1)]+1);
+                        break;
+
+                    case 4:
+                        userX.push(userX[(userX.length-1)]-1);
+                        userY.push(userY[(userY.length-1)]);
+                        break;
+                }
+                if (userX[(userX.length-1)]===appleX && userY[(userY.length-1)]===appleY){
+                    score++;
+                    moveApple();
+                    imgDelay = 3;
+                    b.drawImage(img2, userX[(userX.length-1)]*47+40, userY[(userY.length-1)]*47-200);
+                }
+                else{
+                    b.clearRect(userX.shift()*47,userY.shift()*47,50,50);
+                }
+                
+            }
+
+                function printing(){
+                    b.clearRect(0,0,130,30);
+                    b.fillText("점수: "+String(score), 80, 30);
+                    b.drawImage(img, appleX*47, appleY*47);
+                    for(i = 0; i < userX.length; i++){
+                        b.fillRect((userX[i] * 47), (userY[i] * 47), 47, 47);
+                    }
+                }
+
+                function gameRuning(){
+                    if (play===true){
+                        if(imgDelay>1){
+                            imgDelay--;
+                        }
+                        else{
+                            b.clearRect(0,0,705,705);
+                        }
+                        move();
+                        printing();
+                        if (userX[userX.length-1] > 14 || userY[userY.length-1] > 14 || userX[userX.length-1] < 0 || userY[userY.length-1] < 0){
+                            gameover();
+                        }
+                        else{
+                            for(i=0; i<(userX.length-1); i++){
+                                if(userX[i]===userX[userX.length-1] && userY[i]===userY[userY.length-1]){
+                                    gameover();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                function gameover(){
+                    b.clearRect(0,0,705,705);
+                    b.font = "30px 바탕";
+                    b.fillText("GAMEOVER", 350, 350);
+                    b.font = "20px 바탕";
+                    b.fillText("점수: "+String(score), 350, 400);
+                    b.fillText("재시작 - <R>", 350, 430);
+                    play = false;
+                }
+                
+
+                
+                
+
+            let a = document.getElementById("a");
+            let b = a.getContext("2d");
+            
+            b.textAlign = "center";
+            let img = document.getElementById("apple");
+            let img2 = document.getElementById("heasurg");
+            let imgDelay;
+            let score = 0;
+            b.font = "30px 바탕";
+            b.fillText("아무튼 사과먹는 게임", 350, 330);
+            b.font = "20px 바탕";
+            b.fillText("<R>키를 누르면 시작됩니다.", 350, 380);
+            b.fillText("게임방법 - <왼쪽> 진행방향에서 왼쪽으로 회전", 350, 430);
+            b.fillText("                     <오른쪽> 진행방향에서 오른쪽으로 회전", 350, 460);
+            setInterval(gameRuning,150);
+        
+            
+
+
+
+            onkeydown = function(){
+                if(event.keyCode===37){
+                    direction -= 1;
+                    if (direction < 1){
+                        direction = 4;
+                    }
+                    
+                }
+                else if(event.keyCode===39){
+                    direction += 1;
+                    if (direction > 4){
+                        direction = 1;
+                    }
+                }
+                else if(event.keyCode===82){
+                    b.clearRect(0,0,705,705);
+                    score = 0;
+                    direction = 1;
+                    userX = [8];
+                    userY = [8];
+                    appleX =  Math.floor(Math.random() * 14) + 1;
+                    appleY =  Math.floor(Math.random() * 14) + 1;
+                    play = true;
+                }
+            }
+
+        };
+    </script>
+    
+
+</head>
+
+<body>
+    <img id="heasurg" src="풍선버전2.PNG" width="0" height="0">
+    <img id="apple" src="사과2.PNG" width="0" height="0">
+    <!-- <input type="button" value="(재)시작" Onclick=> -->
+    <canvas id="a" width="705" height="705" style="border:1px solid black;"></canvas>
+</body>
+</html>
