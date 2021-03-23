@@ -117,7 +117,7 @@
 
                 function gameover(){
                     b.clearRect(0,0,705,705);
-                    if (score > 50){
+                    if (score >= 50){
                         b.drawImage(img4, 200, 30);
                         userX = [5,6,7,8,9,10,11,12,13,14];
                         userY = [8,8,8,8,8,8,8,8,8,8];
@@ -127,9 +127,10 @@
                         b.font = "20px 바탕";
                         b.fillText("그렇게 검은 지렁이는 배불러졌습니다.(해피엔딩)", 350, 500);
                         b.fillText("아무튼 지렁이 맞음.", 350, 530);
+                        b.fillText("점수: "+String(score), 570, 340);
                         b.font = "30px 바탕";
                         b.fillText("재시작 - <R>", 350, 580);
-                        b.fillText("점수: "+String(score), 350, 470);
+                        
                     }
                     else{
                         b.font = "30px 바탕";
@@ -185,7 +186,7 @@
                 }
                 else if(event.keyCode===82){
                     b.clearRect(0,0,705,705);
-                    score = 0;
+                    score = 50;
                     direction = 1;
                     userX = [8];
                     userY = [8];
