@@ -22,7 +22,14 @@
                         }
                     }
                 }while (appleLocation === false);
-                b.drawImage(img, appleX*47, appleY*47);
+                fruit = Math.floor(Math.random() * 15) + 1;
+                if (fruit === 15){
+                    b.drawImage(img3, appleX*47, appleY*47);
+                    imgDelay2 = 10;
+                }
+                else{
+                    b.drawImage(img, appleX*47, appleY*47);
+                }
             }
 
             function move(){
@@ -48,7 +55,12 @@
                         break;
                 }
                 if (userX[(userX.length-1)]===appleX && userY[(userY.length-1)]===appleY){
-                    score++;
+                    if (fruit === 15){
+                        score += 5;
+                    }
+                    else{
+                        score++;
+                    } 
                     moveApple();
                     imgDelay = 3;
                     b.drawImage(img2, userX[(userX.length-1)]*47+40, userY[(userY.length-1)]*47-200);
@@ -62,7 +74,12 @@
                 function printing(){
                     b.clearRect(0,0,130,30);
                     b.fillText("점수: "+String(score), 80, 30);
+                    if (fruit === 15){
+                    b.drawImage(img3, appleX*47, appleY*47);
+                }
+                else{
                     b.drawImage(img, appleX*47, appleY*47);
+                }
                     for(i = 0; i < userX.length; i++){
                         b.fillRect((userX[i] * 47), (userY[i] * 47), 47, 47);
                     }
@@ -75,6 +92,12 @@
                         }
                         else{
                             b.clearRect(0,0,705,705);
+                        }
+                        if(imgDelay2>1){
+                            imgDelay2--;
+                        }
+                        else{
+                            fruit = 1;
                         }
                         move();
                         printing();
@@ -93,11 +116,26 @@
 
                 function gameover(){
                     b.clearRect(0,0,705,705);
-                    b.font = "30px 바탕";
-                    b.fillText("GAMEOVER", 350, 350);
-                    b.font = "20px 바탕";
-                    b.fillText("점수: "+String(score), 350, 400);
-                    b.fillText("재시작 - <R>", 350, 430);
+                    if (score > 50){
+                        b.drawImage(img4, 200, 30);
+                        userX = [5,6,7,8,9,10,11,12,13,14];
+                        userY = [8,8,8,8,8,8,8,8,8,8];
+                        for(i = 0; i < userX.length; i++){
+                        b.fillRect((userX[i] * 47), (userY[i] * 47), 47, 47);
+                        }
+                        b.font = "20px 바탕";
+                        b.fillText("그렇게 검은 지렁이는 배불러졌습니다.(해피엔딩)", 350, 500);
+                        b.fillText("아무튼 지렁이 맞음.", 350, 530);
+                        b.font = "30px 바탕";
+                        b.fillText("재시작 - <R>", 350, 580);
+                    }
+                    else{
+                        b.font = "30px 바탕";
+                        b.fillText("GAMEOVER", 350, 350);
+                        b.font = "20px 바탕";
+                        b.fillText("점수: "+String(score), 350, 400);
+                        b.fillText("재시작 - <R>", 350, 430);
+                    }
                     play = false;
                 }
                 
@@ -111,8 +149,12 @@
             b.textAlign = "center";
             let img = document.getElementById("apple");
             let img2 = document.getElementById("heasurg");
+            let img3 = document.getElementById("bae");
+            let img4 = document.getElementById("end");
             let imgDelay;
+            let imgDelay2;
             let score = 0;
+            let fruit;
             b.font = "30px 바탕";
             b.fillText("아무튼 사과먹는 게임", 350, 330);
             b.font = "20px 바탕";
@@ -158,8 +200,10 @@
 </head>
 
 <body>
+    <img id="end" src="엔딩.PNG" width="0" height="0">
     <img id="heasurg" src="풍선버전2.PNG" width="0" height="0">
     <img id="apple" src="사과2.PNG" width="0" height="0">
+    <img id="bae" src="배.PNG" width="0" height="0">
     <!-- <input type="button" value="(재)시작" Onclick=> -->
     <canvas id="a" width="705" height="705" style="border:1px solid black;"></canvas>
 </body>
