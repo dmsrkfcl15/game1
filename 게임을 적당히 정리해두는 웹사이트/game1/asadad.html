@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8"> 
+  <title></title> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+</head> 
+<body> 
+  <canvas id="canvas" width="300" height="300" style="border:1px solid black;"></canvas> 
+  <input type="button" id="btn_x" value="x" onclick="drawShape('draw_x')" /> 
+  <input type="button" id="btn_sqare" value="sqare" onclick="drawShape('draw_sqare')" /> 
+</body> 
+<script type="text/javascript"> 
+  var x,y; 
+  /*마우스 좌표 */ 
+  $("#canvas").click(function(e){ 
+        x = e.clientX; 
+        y = e.clientY; 
+  }); 
+  /* X그리기 */ 
+  function draw_X() { 
+        ctx.strokeStyle = "#DDDD00"; 
+        ctx.beginPath(); 
+        ctx.moveTo(x - 20, y - 20); 
+        ctx.lineTo(x + 20, y + 20); 
+        ctx.moveTo(x + 20, y - 20); 
+        ctx.lineTo(x - 20, y + 20); 
+        ctx.stroke(); 
+  } 
+  /* 네모 그리기 */ 
+  function draw_sqare() { 
+        ctx.strokeStyle = "#FF0000"; 
+        ctx.strokeRect(x, y, 50, 50); 
+  } 
+  function init(){ 
+        ctx = canvas.getContext('2d'); 
+  } 
+  function drawShape(shape) { 
+        init(); 
+        switch (shape) { 
+          case "draw_x": 
+              draw_X(); 
+              break; 
+          case "draw_sqare": 
+              draw_sqare(); 
+              break; 
+       } 
+  } 
+</script> 
+</html> 

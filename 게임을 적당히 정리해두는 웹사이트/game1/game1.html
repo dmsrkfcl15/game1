@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        window.onload = function(){
+
+            function moveApple(){
+                b.clearRect(appleY*47, appleY*47,55,55);
+                let appleLocation;
+                do{
+                    appleLocation = true;
+                    appleX = Math.floor(Math.random() * 14) + 1;
+                    appleY = Math.floor(Math.random() * 14) + 1;
+                    for (i = 0; i < userX.length; i++){
+                        if(appleX===userX[i] && appleY===userY[i]){
+                            appleLocation = false;
+                        }
+                    }
+                }while (appleLocation === false);
+                fruit = Math.floor(Math.random() * 5) + 1;
+                if (fruit === 5){
+                    b.drawImage(img3, appleX*47, appleY*47);
+                    imgDelay2 = 14;
+                }
+                else{
+                    b.drawImage(img, appleX*47, appleY*47);
+                }
+            }
+
+            function move(){
+                switch(direction){
+                    case 1:
+                        userX.push(userX[(userX.length-1)]);
+                        userY.push(userY[(userY.length-1)]-1);
+                        break;
+
+                    case 2:
+                        userX.push(userX[(userX.length-1)]+1);
+                        userY.push(userY[(userY.length-1)]);
+                        break;
+
+                    case 3:
+                        userX.push(userX[(userX.length-1)]);
+                        userY.push(userY[(userY.length-1)]+1);
+                        break;
+
+                    case 4:
+                        userX.push(userX[(userX.length-1)]-1);
+                        userY.push(userY[(userY.length-1)]);
+                        break;
+                }
+                if (userX[(userX.length-1)]===appleX && userY[(userY.length-1)]===appleY){
+                    if (fruit === 5){
+                        score += 5;
+                        imgDelay2 =1;
+                    }
+                    else{
+                        score++;
+                    } 
+                    moveApple();
+                    imgDelay = 3;
+                    b.drawImage(img2, userX[(userX.length-1)]*47+40, userY[(userY.length-1)]*47-200);
+                }
+                else{
+                    b.clearRect(userX.shift()*47,userY.shift()*47,50,50);
+                }
+                
+            }
+
+                function printing(){
+                    b.clearRect(0,0,130,30);
+                    b.fillText("점수: "+String(score), 80, 30);
+                    if (fruit === 5){
+                    b.drawImage(img3, appleX*47, appleY*47);
+                }
+                else{
+                    b.drawImage(img, appleX*47, appleY*47);
+                }
+                    for(i = 0; i < userX.length; i++){
+                        b.fillRect((userX[i] * 47), (userY[i] * 47), 47, 47);
+                    }
+                }
+
+                function gameRuning(){
+                    if (play===true){
+                        if(imgDelay>1){
+                            imgDelay--;
+                        }
+                        else{
+                            b.clearRect(0,0,705,705);
+                        }
+                        if(imgDelay2>1){
+                            imgDelay2--;
+                        }
+                        else{
+                            fruit = 1;
+                        }
+                        move();
+                        printing();
+                        if (userX[userX.length-1] > 14 || userY[userY.length-1] > 14 || userX[userX.length-1] < 0 || userY[userY.length-1] < 0){
+                            gameover();
+                        }
+                        else{
+                            for(i=0; i<(userX.length-1); i++){
+                                if(userX[i]===userX[userX.length-1] && userY[i]===userY[userY.length-1]){
+                                    gameover();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                function gameover(){
+                    b.clearRect(0,0,705,705);
+                    if (score >= 50){
+                        b.drawImage(img4, 200, 30);
+                        userX = [5,6,7,8,9,10,11,12,13,14];
+                        userY = [8,8,8,8,8,8,8,8,8,8];
+                        for(i = 0; i < userX.length; i++){
+                        b.fillRect((userX[i] * 47), (userY[i] * 47), 47, 47);
+                        }
+                        b.font = "20px 바탕";
+                        b.fillText("그렇게 검은 지렁이는 배불러졌습니다.(해피엔딩)", 350, 500);
+                        b.fillText("아무튼 지렁이 맞음.", 350, 530);
+                        b.fillText("점수: "+String(score), 570, 340);
+                        b.font = "30px 바탕";
+                        b.fillText("재시작 - <R>", 350, 580);
+                        
+                    }
+                    else{
+                        b.font = "30px 바탕";
+                        b.fillText("GAMEOVER", 350, 350);
+                        b.font = "20px 바탕";
+                        b.fillText("점수: "+String(score), 350, 400);
+                        b.fillText("재시작 - <R>", 350, 430);
+                    }
+                    play = false;
+                }
+                
+
+                
+                
+
+            let a = document.getElementById("a");
+            let b = a.getContext("2d");
+            b.textAlign = "center";
+            let img = document.getElementById("apple");
+            let img2 = document.getElementById("heasurg");
+            let img3 = document.getElementById("bae");
+            let img4 = document.getElementById("end");
+            let imgDelay;
+            let imgDelay2;
+            let score = 0;
+            let fruit;
+            b.font = "30px 바탕";
+            b.fillText("아무튼 사과먹는 게임", 350, 330);
+            b.font = "20px 바탕";
+            b.fillText("<R>키를 누르면 시작됩니다.", 350, 380);
+            b.fillText("게임방법 - <왼쪽> 진행방향에서 왼쪽으로 회전", 350, 430);
+            b.fillText("                     <오른쪽> 진행방향에서 오른쪽으로 회전", 350, 460);
+            setInterval(gameRuning,150);
+        
+            
+
+
+
+            onkeydown = function(){
+                if(event.keyCode===37){
+                    direction -= 1;
+                    if (direction < 1){
+                        direction = 4;
+                    }
+                    
+                }
+                else if(event.keyCode===39){
+                    direction += 1;
+                    if (direction > 4){
+                        direction = 1;
+                    }
+                }
+                else if(event.keyCode===82){
+                    b.clearRect(0,0,705,705);
+                    score = 0;
+                    direction = 1;
+                    userX = [8];
+                    userY = [8];
+                    appleX =  Math.floor(Math.random() * 14) + 1;
+                    appleY =  Math.floor(Math.random() * 14) + 1;
+                    play = true;
+                }
+            }
+
+        };
+    </script>
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+    
+            body{
+                background-color: beige;
+                font-family: 'Gugi', cursive;
+            }
+            a{
+                color: black;
+            }
+            #textAndList{
+                color: black;
+                margin: 0;
+                display: grid;
+                grid-template-columns: 100px 1fr;
+                height: 1000px;
+            }
+            #text{
+                padding: 10px;
+                padding-top: 30px;
+            }
+            ul{
+                line-height: 35px;
+                border-right: black solid;
+                padding: 0;
+                
+                padding-top: 5px;
+                margin: 0;
+            }
+            h2{
+                font-size: 32px;
+                font-family: 'Gugi', cursive;
+                text-align: center;
+                border-bottom:black solid;
+                padding-bottom: 30px;
+                padding-top: 10px;
+                margin-bottom: 0;
+            }
+            canvas{
+                margin-left: 320px;
+                background-color: white;
+            }
+        </style>
+</head>
+
+<body>
+    <img id="end" src="엔딩.PNG" width="0" height="0">
+    <img id="heasurg" src="풍선버전2.PNG" width="0" height="0">
+    <img id="apple" src="사과2.PNG" width="0" height="0">
+    <img id="bae" src="배.PNG" width="0" height="0">
+
+    <body>
+        <a href="main.html"><h2> 게임을 적당히 정리해두는 웹사이트</h2></a>
+        <div id="textAndList">
+            <ul>
+                <li><a href="li1.html">게임</a></li>
+                <li><a href="li2.html">미완성</a></li>
+                <li><a href="li3.html">게시판</a></li>
+            </ul>
+            <div>
+                <h3>지렁이 게임</h3>
+                <canvas id="a" width="705" height="705" style="border:1px solid black;"></canvas>
+            </div>
+        </div>
+</body>
+</html>
