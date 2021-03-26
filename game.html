@@ -148,7 +148,6 @@
 
             let a = document.getElementById("a");
             let b = a.getContext("2d");
-            
             b.textAlign = "center";
             let img = document.getElementById("apple");
             let img2 = document.getElementById("heasurg");
@@ -198,8 +197,50 @@
 
         };
     </script>
-    
+        <style>
 
+            @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+    
+            body{
+                background-color: beige;
+                font-family: 'Gugi', cursive;
+            }
+            a{
+                color: black;
+            }
+            #textAndList{
+                color: black;
+                margin: 0;
+                display: grid;
+                grid-template-columns: 100px 1fr;
+                height: 1000px;
+            }
+            #text{
+                padding: 10px;
+                padding-top: 30px;
+            }
+            ul{
+                line-height: 35px;
+                border-right: black solid;
+                padding: 0;
+                
+                padding-top: 5px;
+                margin: 0;
+            }
+            h2{
+                font-size: 32px;
+                font-family: 'Gugi', cursive;
+                text-align: center;
+                border-bottom:black solid;
+                padding-bottom: 30px;
+                padding-top: 10px;
+                margin-bottom: 0;
+            }
+            canvas{
+                margin-left: 320px;
+                background-color: white;
+            }
+        </style>
 </head>
 
 <body>
@@ -207,7 +248,19 @@
     <img id="heasurg" src="풍선버전2.PNG" width="0" height="0">
     <img id="apple" src="사과2.PNG" width="0" height="0">
     <img id="bae" src="배.PNG" width="0" height="0">
-    <!-- <input type="button" value="(재)시작" Onclick=> -->
-    <canvas id="a" width="705" height="705" style="border:1px solid black;"></canvas>
+
+    <body>
+        <a href="main.html"><h2> 게임을 적당히 정리해두는 웹사이트</h2></a>
+        <div id="textAndList">
+            <ul>
+                <li><a href="li1.html">게임</a></li>
+                <li><a href="li2.html">미완성</a></li>
+                <li><a href="li3.html">게시판</a></li>
+            </ul>
+            <div>
+                <h3>지렁이 게임</h3>
+                <canvas id="a" width="705" height="705" style="border:1px solid black;"></canvas>
+            </div>
+        </div>
 </body>
 </html>

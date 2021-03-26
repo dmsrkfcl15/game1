@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hamohamo</title>
+        <meta charset="utf-8">
+    </head>
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+
+        body{
+            background-color: beige;
+            font-family: 'Gugi', cursive;
+        }
+        a{
+            color: black;
+        }
+        #textAndList{
+            color: black;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            height: 1000px;
+        }
+        #text{
+            padding: 10px;
+            padding-top: 30px;
+        }
+        ul{
+            line-height: 35px;
+            border-right: black solid;
+            padding: 0;
+            
+            padding-top: 5px;
+            margin: 0;
+        }
+        h2{
+            font-size: 32px;
+            font-family: 'Gugi', cursive;
+            text-align: center;
+            border-bottom:black solid;
+            padding-bottom: 30px;
+            padding-top: 10px;
+            margin-bottom: 0;
+        }
+    </style>
+    <body>
+        <a href="main.html"><h2> 게임을 적당히 정리해두는 웹사이트</h2></a>
+        <div id="textAndList">
+            <ul>
+                <li><a href="li1.html">게임</a></li>
+                <li><a href="li2.html">미완성</a></li>
+                <li><a href="li3.html">게시판</a></li>
+            </ul>
+            <div>
+                <h3>미완성</h3>
+                <div id="text">
+                    입력된 목록이 없습니다.
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
